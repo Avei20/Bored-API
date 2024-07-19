@@ -52,13 +52,20 @@ app.listen(PORT);
 console.log(chalk.green('Started on port ' + PORT));
 
 //  Connect to MongoDB
-const DATABASE = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : config.database;
+const DATABASE = process.env.MONGODB_URI ? process.env.MONGODB_URI : config.database;
+
+
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true }, useNewUrlParser: true, useUnifiedTopology: true };
+
 
 mongoose.Promise = global.Promise;
-mongoose.connect(DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
-	.then(res => {
+mongoose.connect(DATABASE, clientOptions)
+	.then(async (res) => {
+		await mongoose.connection.db.admin().command({ ping: 1 });
+		console.log("Pinged your deployment. You successfully connected to MongoDB!");
 		console.log(chalk.green('Connected to MongoDB: ' + DATABASE));
 	}).catch(err => {
 		console.log(chalk.red('Error connecting to MongoDB: ' + err));
 	}
 );
+mongoose.connection.useDb('boredapi');

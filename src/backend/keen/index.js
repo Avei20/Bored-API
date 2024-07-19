@@ -8,10 +8,5 @@ const client = new Keen({
 exports.logQuery = (type, query) => {
 	if (process.env.NODE_ENV === 'dev') return;
 
-	return client.recordEvent('query', {
-		type,
-		query
-	}, err => {
-		if (err) console.log(err);
-	});
+	return ;
 };

@@ -41,6 +41,7 @@ module.exports = function(router) {
 				res.error('Failed to query due to error in arguments');
 			}
 			else {
+				console.log(err)
 				res.error(err.message || 'There was an error querying for activity');
 			}
 		});

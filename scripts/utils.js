@@ -4,7 +4,7 @@ const util = require('util');
 
 require('dotenv').config({path: __dirname + '/../.env'});
 
-const matches = (/mongodb:\/\/([^:]*):([^@]*)@([^\/]*)\/(.*)/g).exec(process.env.MONGODB_URI);
+const matches = (/mongodb.*:\/\/([^:]*):([^@]*)@([^\/]*)\/(.*)/g).exec(process.env.MONGODB_URI);
 if (!matches || matches.length < 5) throw new Error('Cannot parse MONGODB_URI due to invalid format');
 
 module.exports = {
